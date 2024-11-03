@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Overall Expenses</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='over.css') }}">
+
+    <style>
+        /* Full-screen Video Background */
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        /* Overlay for content */
+        .overlay {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: #ffffff; /* All text set to white */
+            text-align: center;
+        }
+
+        /* Header Title */
+        h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #ffffff; /* White text */
+            text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.7); /* Text shadow for contrast */
+        }
+
+        /* Table styling */
+        table {
+            width: 80%;
+            max-width: 600px;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+            color: #ffffff; /* White text */
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+        th, td {
+            padding: 12px 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            color: #ffffff; /* White text for table cells */
+        }
+        th {
+            background-color: rgba(255, 255, 255, 0.1);
+            font-size: 18px;
+            color: #ffffff; /* White text for headers */
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Back Button Styling */
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #ffffff; /* White text */
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+        button:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+        }
+        /* Background and Font */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #E0F7F4; /* Mint Green */
+    color: #333333; /* Dark Charcoal */
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Header Styling */
+h1 {
+    color: #034078; /* Navy Blue */
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+/* Button Styling */
+button {
+    padding: 10px 20px;
+    background-color: #034078; /* Navy Blue */
+    color: #FFFFFF;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 20px auto;
+    display: block;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+button:hover {
+    transform: scale(1.05); /* Slight grow on hover */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Box shadow on hover */
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    border-collapse: collapse;
+    background-color: #FFFFFF; /* Soft White */
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+    color: #333333; /* Dark Charcoal */
+}
+
+th {
+    background-color: #034078; /* Navy Blue */
+    color: #FFFFFF;
+    font-size: 1.1em;
+}
+
+td {
+    border-bottom: 1px solid #F78C6B; /* Coral accent */
+}
+
+/* Table Row Hover Effect */
+tr:hover {
+    background-color: rgba(3, 64, 120, 0.1); /* Light navy hover */
+    transition: transform 0.2s;
+}
+
+/* Fade-in Slide-up Animation for Expense List Items */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+tbody tr {
+    animation: fadeInUp 0.5s ease both;
+}
+    </style>
+</head>
+<body>
+
+<!-- Full-screen Video Background with Poster for Quick Load -->
+<video autoplay muted loop class="video-background" preload="auto" poster="{{ url_for('static', filename='overall-thumbnail.jpg') }}">
+    <source src="{{ url_for('static', filename='overall.mp4') }}" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+
+<div class="overlay">
+    <!-- Page Title -->
+    <h1>Overall Expenses</h1>
+
+    <!-- Back to Dashboard Button -->
+    <button onclick="window.location.href='/dashboard'">Back to Dashboard</button>
+
+    <!-- Expense Table -->
+    <table>
+        <tr>
+            <th>Category</th>
+            <th>Total Amount</th>
+        </tr>
+        {% for category, total in overall_data.items() %}
+        <tr>
+            <td>{{ category }}</td>
+            <td>{{ total }}</td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <th>Total Expenses</th>
+            <th>{{ total_expenses }}</th>
+        </tr>
+    </table>
+</div>
+
+<script>
+    // JavaScript for adding interactive animations
+
+document.addEventListener("DOMContentLoaded", function() {
+    // Animate each table row as it loads
+    const rows = document.querySelectorAll("tbody tr");
+    rows.forEach((row, index) => {
+        row.style.animationDelay = `${index * 0.1}s`;
+    });
+
+    // Confirmation message before navigating to the dashboard
+    const backButton = document.querySelector("button");
+    backButton.addEventListener("click", function(event) {
+        const confirmed = confirm("Are you sure you want to go back to the dashboard?");
+        if (!confirmed) {
+            event.preventDefault();
+        }
+    });
+});
+// Example function to add an expense list item with fade-in and slide-up effect
+function addExpenseItem(title, amount, category) {
+    // Create the expense item element
+    const expenseItem = document.createElement("div");
+    expenseItem.classList.add("expense-item");
+
+    // Add content to the item
+    expenseItem.innerHTML = `
+        <h3>${title}</h3>
+        <p>Amount: ₹${amount}</p>
+        <p>Category: ${category}</p>
+    `;
+
+    // Style and add fade-in & slide-up animation
+    expenseItem.style.opacity = 0;
+    expenseItem.style.transform = "translateY(20px)";
+    document.body.appendChild(expenseItem);
+
+    // Animation effect
+    setTimeout(() => {
+        expenseItem.style.transition = "opacity 0.5s ease, transform 0.5s ease";
+        expenseItem.style.opacity = 1;
+        expenseItem.style.transform = "translateY(0)";
+    }, 100);
+}
+
+</script>
+</body>
+</html>

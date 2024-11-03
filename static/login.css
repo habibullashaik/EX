@@ -1,0 +1,88 @@
+/* Background */
+body {
+    background-color: #E0F7F4; /* Mint Green background */
+    color: #333333; /* Dark Charcoal for text */
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Container for the Form */
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-box {
+    background-color: #FFFFFF; /* Soft White for the form box */
+    padding: 40px;
+    width: 350px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+/* Form Header */
+.form-box h1 {
+    color: #034078; /* Navy Blue for headers */
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* Input Fields */
+.form-box input[type="text"],
+.form-box input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #FFFFFF; /* Soft White */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #333333; /* Dark Charcoal */
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.form-box input[type="text"]:focus,
+.form-box input[type="password"]:focus {
+    border-color: #F78C6B; /* Coral border on focus */
+}
+
+/* Submit Button */
+.form-box button {
+    width: 100%;
+    padding: 12px;
+    background-color: #034078; /* Navy Blue */
+    color: #FFFFFF;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-box button:hover {
+    transform: scale(1.05); /* Grow slightly */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Switch Form Text */
+.switch-form {
+    margin-top: 15px;
+    color: #034078; /* Navy Blue */
+}
+
+.switch-form a {
+    color: #F78C6B; /* Coral for link */
+    text-decoration: none;
+}
+
+.switch-form a:hover {
+    text-decoration: underline;
+}

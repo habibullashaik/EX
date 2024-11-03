@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Expense Analysis</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #E0F7F4; /* Mint Green */
+            color: #333333; /* Dark Charcoal */
+            margin: 0;
+            padding: 20px;
+            position: relative; /* For positioning the video */
+            overflow: hidden; /* Prevents scrolling */
+            height: 100vh; /* Full height */
+        }
+        video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures the video covers the entire background */
+            z-index: -1; /* Places the video behind other elements */
+        }
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #f8f9fa; /* Navy Blue */
+            position: relative; /* Ensures title is above the video */
+            z-index: 1;
+        }
+        .chart-grid {
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto; /* Enable vertical scrolling */
+            max-height: calc(100vh - 120px); /* Leave space for title */
+            width: 100%;
+            max-width: 1200px;
+            padding: 20px;
+            position: relative; /* For proper z-index stacking */
+            z-index: 1; /* Ensure charts are above video */
+        }
+        .chart-container {
+            position: relative;
+            background-color: rgba(255, 255, 255, 0.8); /* Soft White with transparency */
+            padding: 20px;
+            border-radius: 8px;
+            transition: transform 0.3s, box-shadow 0.3s, width 0.3s, height 0.3s, z-index 0.3s;
+            cursor: pointer;
+            height: 300px; /* Default height */
+            margin-bottom: 20px; /* Space between charts */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .chart-container:hover {
+            transform: scale(1.05); /* Button hover effect */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+        .chart-container.expanded {
+    width: 90vw;
+    height: 70vh; /* Set height for better visibility in 7:7 ratio */
+    z-index: 1000;
+    padding: 30px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+    background-color: rgba(249, 249, 249, 0.9); /* Slightly darker for expanded */
+    overflow-y: auto; /* Enables vertical scrolling */
+}
+        .chart-container canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+        .dashboard-button {
+            background-color: #034078; /* Navy Blue */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top:3px;
+            transition: background-color 0.3s; /* Smooth background color transition */
+            position: relative; /* Ensures button is above the video */
+            z-index: 1;
+        }
+        .dashboard-button:hover {
+            background-color: #02305a; /* Darker navy on hover */
+        }
+    </style>
+</head>
+<body>
+
+<video autoplay muted loop>
+    <source src="{{ url_for('static', filename='graphs.mp4') }}" type="video/mp4"><!-- Replace with your video file -->
+    Your browser does not support the video tag.
+</video>
+
+<h1>Interactive Expense Analysis</h1>
+
+<div class="chart-grid">
+    <div class="chart-container" id="expenseBarChartContainer" onclick="toggleSize(this)">
+        <canvas id="expenseBarChart"></canvas>
+    </div>
+    <div class="chart-container" id="monthlyExpenseLineChartContainer" onclick="toggleSize(this)">
+        <canvas id="monthlyExpenseLineChart"></canvas>
+    </div>
+    <div class="chart-container" id="expensePieChartContainer" onclick="toggleSize(this)">
+        <canvas id="expensePieChart"></canvas>
+    </div>
+    <div class="chart-container" id="expenseDoughnutChartContainer" onclick="toggleSize(this)">
+        <canvas id="expenseDoughnutChart"></canvas>
+    </div>
+    <div class="chart-container" id="expenseRadarChartContainer" onclick="toggleSize(this)">
+        <canvas id="expenseRadarChart"></canvas>
+    </div>
+    <div class="chart-container" id="expensePolarAreaChartContainer" onclick="toggleSize(this)">
+        <canvas id="expensePolarAreaChart"></canvas>
+    </div>
+</div>
+
+<button class="dashboard-button" onclick="window.location.href='/dashboard'">Go to Dashboard</button> <!-- Update the URL accordingly -->
+
+<script>
+    async function fetchData() {
+        const graphResponse = await fetch('/get_graph_data');
+        const monthlyResponse = await fetch('/get_monthly_expenses');
+
+        const graphData = await graphResponse.json();
+        const monthlyData = await monthlyResponse.json();
+
+        createBarChart(graphData.labels, graphData.data);
+        createLineChart(monthlyData.labels, monthlyData.data);
+        createPieChart(graphData.labels, graphData.data);
+        createDoughnutChart(graphData.labels, graphData.data);
+        createRadarChart(graphData.labels, graphData.data);
+        createPolarAreaChart(graphData.labels, graphData.data);
+    }
+
+    let expandedContainer = null;
+
+    function toggleSize(container) {
+        // Collapse previously expanded chart
+        if (expandedContainer && expandedContainer !== container) {
+            expandedContainer.classList.remove('expanded');
+        }
+        
+        // Toggle expansion for the clicked chart
+        container.classList.toggle('expanded');
+        expandedContainer = container.classList.contains('expanded') ? container : null;
+    }
+
+    function createBarChart(labels, data) {
+        new Chart(document.getElementById('expenseBarChart').getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Expenses by Category',
+                    data: data,
+                    backgroundColor: 'rgba(75, 192, 192, 0.7)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: { ticks: { color: '#333333' } },
+                    y: { ticks: { color: '#333333' }, beginAtZero: true }
+                },
+                plugins: {
+                    legend: { labels: { color: '#333333' } },
+                    title: { display: true, text: 'Expenses by Category', color: '#333333' }
+                }
+            }
+        });
+    }
+
+    function createLineChart(labels, data) {
+        new Chart(document.getElementById('monthlyExpenseLineChart').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Monthly Expenses',
+                    data: data,
+                    backgroundColor: 'rgba(153, 102, 255, 0.5)',
+                    borderColor: 'rgba(153, 102, 255, 1)',
+                    borderWidth: 2,
+                    fill: false
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: { ticks: { color: '#333333' } },
+                    y: { ticks: { color: '#333333' }, beginAtZero: true }
+                },
+                plugins: {
+                    legend: { labels: { color: '#333333' } },
+                    title: { display: true, text: 'Monthly Expenses', color: '#333333' }
+                }
+            }
+        });
+    }
+
+    function createPieChart(labels, data) {
+        new Chart(document.getElementById('expensePieChart').getContext('2d'), {
+            type: 'pie',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Expense Distribution',
+                    data: data,
+                    backgroundColor: ['#ff6384', '#36a2eb', '#cc65fe', '#ffce56', '#ff9f40'],
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#333333' } },
+                    title: { display: true, text: 'Expense Distribution', color: '#333333' }
+                }
+            }
+        });
+    }
+
+    function createDoughnutChart(labels, data) {
+        new Chart(document.getElementById('expenseDoughnutChart').getContext('2d'), {
+            type: 'doughnut',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Expense Distribution',
+                    data: data,
+                    backgroundColor: ['#ff6384', '#36a2eb', '#cc65fe', '#ffce56', '#ff9f40'],
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#333333' } },
+                    title: { display: true, text: 'Expense Distribution', color: '#333333' }
+                }
+            }
+        });
+    }
+
+    function createRadarChart(labels, data) {
+        new Chart(document.getElementById('expenseRadarChart').getContext('2d'), {
+            type: 'radar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Expense Radar',
+                    data: data,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: { ticks: { color: '#333333' }, angleLines: { color: '#333333' } }
+                },
+                plugins: {
+                    legend: { labels: { color: '#333333' } },
+                    title: { display: true, text: 'Expense Radar', color: '#333333' }
+                }
+            }
+        });
+    }
+
+    function createPolarAreaChart(labels, data) {
+        new Chart(document.getElementById('expensePolarAreaChart').getContext('2d'), {
+            type: 'polarArea',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Expense Polar Area',
+                    data: data,
+                    backgroundColor: 'rgba(153, 102, 255, 0.5)',
+                    borderColor: 'rgba(153, 102, 255, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: { ticks: { color: '#333333' } }
+                },
+                plugins: {
+                    legend: { labels: { color: '#333333' } },
+                    title: { display: true, text: 'Expense Polar Area', color: '#333333' }
+                }
+            }
+        });
+    }
+
+    // Fetch data on page load
+    window.onload = fetchData;
+</script>
+
+</body>
+</html>

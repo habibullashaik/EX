@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto my-10 p-6 bg-white shadow-lg rounded-lg">
+        <h2 class="text-3xl font-bold text-center text-blue-700 mb-6">Dashboard</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <canvas id="pieChart" class="p-4 bg-gray-50 rounded-lg shadow"></canvas>
+            <canvas id="barChart" class="p-4 bg-gray-50 rounded-lg shadow"></canvas>
+            <canvas id="lineChart" class="p-4 bg-gray-50 rounded-lg shadow"></canvas>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='charts.js') }}"></script>
+</body>
+</html>

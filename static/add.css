@@ -1,0 +1,84 @@
+/* Background and general text styling */
+body.background {
+    background-color: #E0F7F4; /* Mint Green */
+    color: #333333; /* Dark Charcoal */
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+
+/* Header styling */
+.header-title {
+    text-align: center;
+    color: #034078; /* Navy Blue */
+    margin-bottom: 20px;
+    font-size: 2.5em;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Form styling */
+.expense-form {
+    max-width: 400px;
+    margin: auto;
+    background-color: #FFFFFF; /* Soft White */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Label styling */
+.label {
+    display: block;
+    margin: 10px 0 5px;
+    color: #034078; /* Navy Blue */
+}
+
+/* Input and Select Fields */
+.input-field {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #F78C6B; /* Coral border */
+    border-radius: 5px;
+    background-color: #FFFFFF; /* Soft White */
+    color: #333333; /* Dark Charcoal */
+    transition: border-color 0.3s; /* Smooth transition */
+}
+
+.input-field:focus {
+    border-color: #034078; /* Navy Blue on focus */
+    outline: none;
+}
+
+/* Button styling */
+.primary-button, .cancel-button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s; /* Hover animation */
+    width: 48%;
+    color: #FFFFFF; /* White text */
+}
+
+/* Primary Button */
+.primary-button {
+    background-color: #034078; /* Navy Blue */
+    margin-right: 4%;
+}
+
+.primary-button:hover {
+    background-color: #022c52; /* Darker Navy */
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Cancel Button */
+.cancel-button {
+    background-color: #F78C6B; /* Coral */
+}
+
+.cancel-button:hover {
+    background-color: #e46d56; /* Darker Coral */
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}

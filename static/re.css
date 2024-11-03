@@ -1,0 +1,70 @@
+/* General Body Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #E0F7F4; /* Mint Green */
+    color: #333333; /* Dark Charcoal */
+    margin: 0;
+    padding: 20px;
+}
+
+/* Header Styles */
+h1 {
+    text-align: center;
+    color: #034078; /* Navy Blue */
+    margin-bottom: 20px;
+}
+
+/* Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: auto;
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #F78C6B; /* Coral */
+}
+
+th {
+    background-color: #034078; /* Navy Blue */
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: rgba(240, 248, 255, 0.5); /* Light mint for even rows */
+}
+
+/* Button Styles */
+button {
+    padding: 10px 20px;
+    background-color: #034078; /* Navy Blue */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: block;
+    margin: 20px auto;
+}
+
+button:hover {
+    transform: scale(1.05); /* Grow slightly on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Add shadow on hover */
+}
+
+/* Animation for Table Rows */
+.fade-in-slide-up {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInSlideUp 0.5s forwards;
+}
+
+@keyframes fadeInSlideUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

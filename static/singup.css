@@ -1,0 +1,109 @@
+/* Background */
+body {
+    background-color: #E0F7F4; /* Mint Green background */
+    color: #333333; /* Dark Charcoal for text */
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Container for the Form */
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-box {
+    background-color: #FFFFFF; /* Soft White for the form box */
+    padding: 40px;
+    width: 350px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+/* Form Header */
+.form-box h1 {
+    color: #034078; /* Navy Blue for headers */
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* Input Fields */
+.input-box {
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.input-box input {
+    width: 100%;
+    padding: 10px;
+    background-color: #FFFFFF; /* Soft White */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #333333; /* Dark Charcoal */
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.input-box input:focus {
+    border-color: #F78C6B; /* Coral border on focus */
+}
+
+/* Labels for Input Fields */
+.input-box label {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: #999;
+    font-size: 14px;
+    pointer-events: none;
+    transition: 0.3s ease;
+}
+
+.input-box input:focus + label,
+.input-box input:not(:placeholder-shown) + label {
+    top: -15px;
+    left: 5px;
+    font-size: 12px;
+    color: #F78C6B; /* Coral label on focus */
+}
+
+/* Submit Button */
+.submit-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #034078; /* Navy Blue */
+    color: #FFFFFF;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.submit-btn:hover {
+    transform: scale(1.05); /* Grow slightly */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Switch Form Text */
+.switch-form {
+    margin-top: 15px;
+    color: #034078; /* Navy Blue */
+}
+
+.switch-form a {
+    color: #F78C6B; /* Coral for link */
+    text-decoration: none;
+}
+
+.switch-form a:hover {
+    text-decoration: underline;
+}

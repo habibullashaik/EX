@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Recently Added Expenses</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='re.css') }}">
+
+    <style>
+        /* Full-screen Video Background */
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        /* Overlay for content */
+        .overlay {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: #ffffff; /* White text for readability */
+            text-align: center;
+        }
+
+        /* Header Title */
+        h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #ffffff; /* White text */
+            text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.7); /* Text shadow for contrast */
+        }
+
+        /* Table styling */
+        table {
+            width: 80%;
+            max-width: 600px;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+            color: #ffffff; /* White text */
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+        th, td {
+            padding: 12px 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            color: #ffffff; /* White text for table cells */
+        }
+        th {
+            background-color: rgba(255, 255, 255, 0.1);
+            font-size: 18px;
+            color: #ffffff; /* White text for headers */
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Back Button Styling */
+        button {
+            margin-top: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #ffffff; /* White text */
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+        button:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+        }
+        /* General Body Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #E0F7F4; /* Mint Green */
+    color: #333333; /* Dark Charcoal */
+    margin: 0;
+    padding: 20px;
+}
+
+/* Header Styles */
+h1 {
+    text-align: center;
+    color: #034078; /* Navy Blue */
+    margin-bottom: 20px;
+}
+
+/* Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: auto;
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #F78C6B; /* Coral */
+}
+
+th {
+    background-color: #034078; /* Navy Blue */
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: rgba(240, 248, 255, 0.5); /* Light mint for even rows */
+}
+
+/* Button Styles */
+button {
+    padding: 10px 20px;
+    background-color: #034078; /* Navy Blue */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: block;
+    margin: 20px auto;
+}
+
+button:hover {
+    transform: scale(1.05); /* Grow slightly on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Add shadow on hover */
+}
+
+/* Animation for Table Rows */
+.fade-in-slide-up {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInSlideUp 0.5s forwards;
+}
+
+@keyframes fadeInSlideUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+    </style>
+</head>
+<body>
+
+<!-- Full-screen Video Background -->
+<video autoplay muted loop class="video-background" preload="auto" poster="{{ url_for('static', filename='recent-thumbnail.jpg') }}">
+    <source src="{{ url_for('static', filename='recenlty.mp4') }}" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+
+<div class="overlay">
+    <!-- Page Title -->
+    <h1>Recently Added Expenses</h1>
+
+    <!-- Expense Table -->
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Amount</th>
+            <th>Category</th>
+            <th>Date</th>
+        </tr>
+        {% for expense in expenditures %}
+        <tr class="fade-in-slide-up">
+            <td>{{ expense[1] }}</td>
+            <td>{{ expense[2] }}</td>
+            <td>{{ expense[3] }}</td>
+            <td>{{ expense[4][:10] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <!-- Back to Dashboard Button -->
+    <button onclick="window.location.href='/dashboard'">Go Back to Dashboard</button>
+</div>
+
+<script>
+    // Optional JavaScript if you want to handle specific behaviors or animations
+document.addEventListener('DOMContentLoaded', function () {
+    // Select all rows with the fade-in-slide-up class
+    const rows = document.querySelectorAll('.fade-in-slide-up');
+    rows.forEach((row, index) => {
+        // Delay the animation for each row
+        row.style.animationDelay = `${index * 0.1}s`;
+    });
+});
+
+</script>
+</body>
+</html>

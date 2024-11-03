@@ -1,0 +1,92 @@
+/* Background and Font */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #E0F7F4; /* Mint Green */
+    color: #333333; /* Dark Charcoal */
+    margin: 0;
+    padding: 20px;
+}
+
+/* Header and Button Styling */
+h1 {
+    text-align: center;
+    color: #034078; /* Navy Blue */
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #034078; /* Navy Blue */
+    color: #FFFFFF;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+button:hover {
+    transform: scale(1.05); /* Grow on hover */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Box shadow on hover */
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #FFFFFF; /* Soft White */
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+    color: #333333; /* Dark Charcoal */
+}
+
+th {
+    background-color: #034078; /* Navy Blue */
+    color: #FFFFFF;
+}
+
+td {
+    border-bottom: 1px solid #F78C6B; /* Coral accent */
+}
+
+/* Table Row Hover Effect */
+tr:hover {
+    background-color: rgba(3, 64, 120, 0.1); /* Light navy hover */
+    transition: transform 0.2s;
+}
+
+/* Delete Button Styling */
+.delete-btn {
+    color: #F78C6B; /* Coral */
+    border: none;
+    background: none;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.delete-btn:hover {
+    transform: scale(1.05); /* Grow on hover */
+}
+
+/* Fade-in Slide-up Animation for Expense List Items */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+tbody tr {
+    animation: fadeInUp 0.5s ease both;
+}

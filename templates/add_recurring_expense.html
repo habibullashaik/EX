@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Recurring Expense</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='add.css') }}">
+    <style>
+        /* Full-screen Video Background */
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        /* Overlay for buttons and form */
+        .overlay {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: #ffffff; /* White text */
+            text-align: center;
+        }
+
+        /* Header Title */
+        .header-title {
+            font-size: 36px;
+            color: #ffffff; /* White text */
+            margin-bottom: 20px;
+            z-index: 2;
+            text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.7); /* Text shadow for contrast */
+        }
+
+        /* Form Container */
+        .recurring-expense-form {
+            background-color: rgba(0, 0, 0, 0.75); /* Semi-transparent background */
+            padding: 20px 30px;
+            border-radius: 10px;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            z-index: 2;
+        }
+
+        /* Label and Input Styling */
+        .label {
+            font-size: 16px;
+            color: #ffffff; /* White text */
+            display: block;
+            margin-top: 10px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            outline: none;
+            background-color: rgba(214, 204, 204, 0.2);
+            color: #ffffff; /* White text */
+        }
+
+        /* Buttons */
+        .primary-button, .cancel-button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s;
+            color: #ffffff; /* White text */
+        }
+
+        .primary-button {
+            background-color: #4CAF50;
+        }
+
+        .primary-button:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+        }
+
+        .cancel-button {
+            background-color: #f44336;
+        }
+
+        .cancel-button:hover {
+            background-color: #d32f2f;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+<!-- Full-screen Video Background with Poster for Quick Load -->
+<video autoplay muted loop class="video-background" preload="auto" poster="{{ url_for('static', filename='dash-thumbnail.jpg') }}">
+    <source src="{{ url_for('static', filename='rec.mp4') }}" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+
+<div class="overlay">
+    <!-- Page Title -->
+    <h1 class="header-title">Add Recurring Expense</h1>
+
+    <!-- Form Container -->
+    <form action="{{ url_for('add_recurring_expense') }}" method="POST" class="recurring-expense-form">
+        <label for="title" class="label">Title</label>
+        <input type="text" name="title" class="input-field" placeholder="Title" required>
+        
+        <label for="amount" class="label">Amount</label>
+        <input type="number" name="amount" class="input-field" placeholder="Amount" step="0.01" required>
+        
+        <label for="category" class="label">Category</label>
+        <input type="text" name="category" class="input-field" placeholder="Category" required>
+        
+        <label for="interval" class="label">Interval</label>
+        <select name="interval" class="input-field" required>
+            <option value="daily">Daily</option>
+            <option value="weekly">Weekly</option>
+            <option value="monthly">Monthly</option>
+        </select>
+        
+        <button type="submit" class="primary-button">Add Recurring Expense</button>
+        <button type="button" class="cancel-button" onclick="window.location.href='{{ url_for('dashboard') }}'">Cancel</button>
+    </form>
+</div>
+
+<script src="{{ url_for('static', filename='add.js') }}"></script>
+</body>
+</html>

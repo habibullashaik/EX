@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+    <style>
+        /* Fullscreen video background */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+
+        .background-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        
+
+        .form-box {
+            background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            width: 300px; /* Set a fixed width for the form */
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #034078; /* Primary color */
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+            margin-bottom: 20px; /* Add margin to the input fields */
+        }
+
+        input:focus {
+            border-color: #034078; /* Change border color on focus */
+            outline: none;
+        }
+
+        .submit-btn {
+            background-color: #034078;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            background-color: #022b50; /* Darker shade on hover */
+        }
+
+        .switch-form {
+            margin-top: 20px;
+        }
+
+        .switch-form a {
+            color: #034078;
+            text-decoration: none;
+        }
+        /* Background */
+body {
+    background-color: #E0F7F4; /* Mint Green background */
+    color: #333333; /* Dark Charcoal for text */
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Container for the Form */
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-box {
+    background-color: #FFFFFF; /* Soft White for the form box */
+    padding: 40px;
+    width: 350px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+/* Form Header */
+.form-box h1 {
+    color: #034078; /* Navy Blue for headers */
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* Input Fields */
+.form-box input[type="text"],
+.form-box input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #FFFFFF; /* Soft White */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #333333; /* Dark Charcoal */
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.form-box input[type="text"]:focus,
+.form-box input[type="password"]:focus {
+    border-color: #F78C6B; /* Coral border on focus */
+}
+
+/* Submit Button */
+.form-box button {
+    width: 100%;
+    padding: 12px;
+    background-color: #034078; /* Navy Blue */
+    color: #FFFFFF;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-box button:hover {
+    transform: scale(1.05); /* Grow slightly */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Switch Form Text */
+.switch-form {
+    margin-top: 15px;
+    color: #034078; /* Navy Blue */
+}
+
+.switch-form a {
+    color: #F78C6B; /* Coral for link */
+    text-decoration: none;
+}
+
+.switch-form a:hover {
+    text-decoration: underline;
+}
+
+    </style>
+</head>
+<body>
+
+<!-- Background Video -->
+<video autoplay loop muted class="background-video">
+    <source src="{{ url_for('static', filename='sining.mp4') }}" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+
+<div class="container">
+    <div class="form-box">
+        <h1>Log In</h1>
+        <form action="/login" method="post">
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit" class="submit-btn">Login</button>
+        </form>
+        
+        <p class="switch-form">Don't have an account? <a href="/">Sign Up</a></p>
+    </div>
+</div>
+
+<script >
+    // Animate login form elements on page load
+window.onload = function() {
+    gsap.from(".form-box", { opacity: 0, y: 30, duration: 1, ease: "power2.out" });
+    gsap.from("input[type='text'], input[type='password']", { opacity: 0, y: 20, duration: 0.8, ease: "power2.out", stagger: 0.1 });
+    gsap.from("button", { opacity: 0, scale: 0.8, duration: 0.8, ease: "elastic.out(1, 0.5)", delay: 0.3 });
+};
+
+</script>
+</body>
+</html>

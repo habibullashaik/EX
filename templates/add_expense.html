@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add New Expense</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='add.css') }}">
+    <style>
+        /* Full-screen Video Background */
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        /* Overlay for buttons and form */
+        .overlay {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: #ffffff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Header Title */
+        h1 {
+            font-size: 36px;
+            color: #ffffff;
+            margin-bottom: 20px;
+            text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Form Container */
+        .expense-form {
+            background-color: rgba(0, 0, 0, 0.6); /* Increase transparency */
+            padding: 20px 30px;
+            border-radius: 10px;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6); /* Stronger shadow */
+            z-index: 2;
+        }
+
+        /* Label and Input Styling */
+        label {
+            font-size: 16px;
+            color: #ffffff;
+            display: block;
+            margin-top: 10px;
+        }
+
+        input[type="text"], input[type="number"], select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            outline: none;
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #333;
+        }
+
+        /* Buttons */
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s;
+        }
+
+        button[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+        }
+
+        button[type="button"] {
+            background-color: #f44336;
+            color: white;
+        }
+
+        button[type="button"]:hover {
+            background-color: #d32f2f;
+            transform: scale(1.05);
+        }
+
+        /* General body styling */
+        body.background {
+            background-color: #E0F7F4;
+            color: #333333;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <!-- Full-screen Video Background -->
+    <video autoplay muted loop class="video-background">
+        <source src="{{ url_for('static', filename='add.mp4') }}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <div class="overlay">
+        <h1>Add New Expense</h1>
+        <form action="{{ url_for('add_expense') }}" method="POST" class="expense-form">
+            <label for="title">Title</label>
+            <input type="text" name="title" required>
+            
+            <label for="amount">Amount</label>
+            <input type="number" name="amount" step="0.01" required>
+            
+            <label for="category">Category</label>
+            <select name="category" required>
+                <option value="Food">Food</option>
+                <option value="Utilities">Utilities</option>
+                <option value="Entertainment">Entertainment</option>
+                <option value="Transport">Transport</option>
+                <option value="Other">Other</option>
+            </select>
+            
+            <button type="submit">Add Expense</button>
+            <button type="button" onclick="window.location.href='/dashboard'">Cancel</button>
+        </form>
+    </div>
+</body>
+</html>
